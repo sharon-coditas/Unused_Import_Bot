@@ -1,0 +1,17 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="UnusedImportDetector:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/UnusedImportDetector_jar</output-path>
+    <root id="archive" name="UnusedImportDetector.jar">
+      <element id="module-output" name="UnusedImportDetector" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Dependency/google-java-format-1.15.0-all-deps.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Dependency/qdox-2.0-m1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Dependency/google-collections-1.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Dependency/error_prone_annotations-2.11.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Dependency/guava-31.1-jre.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Dependency/checker-qual-3.12.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Dependency/j2objc-annotations-1.3.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Dependency/jsr305-3.0.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Dependency/failureaccess-1.0.1.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
