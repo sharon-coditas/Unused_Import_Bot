@@ -8,6 +8,7 @@ import java.io.*;
 import java.nio.file.Paths;
 import java.util.*;
 
+import static com.Constants.Constants.*;
 import static com.coditas.unusedImportsBot.Bot.*;
 
 /**
@@ -43,21 +44,21 @@ public class BotV3 extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButton1.setText("CLICK FOR UNUSED IMPORTS");
+        jButton1.setText(SET_TEXT_UNUSED_IMPORTS);
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
 
-        jButton2.setText("CLICK FOR IF ELSE SCANNER");
+        jButton2.setText(SET_TEXT_IF_ELSE);
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
 
-        jButton3.setText("CLICK FOR UNWANTED STRING");
+        jButton3.setText(SET_TEXT_UNWANTED_STRING);
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
@@ -68,7 +69,7 @@ public class BotV3 extends javax.swing.JFrame {
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
 
-        jButton4.setText("CHOOSE FOLDER FOR SCANNING");
+        jButton4.setText(SET_TEXT_FOLDER_SCANNING);
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
@@ -148,11 +149,7 @@ public class BotV3 extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-         */
+
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -193,24 +190,24 @@ public class BotV3 extends javax.swing.JFrame {
     public static void UnusedImports() {
         try {
             List<String> detailsImport = new ArrayList<>();
-            detailsImport.add("UNUSED IMPORTS \n");
+            detailsImport.add(DETAILS_IMPORTS);
             for (String filesContent : listFiles) {
                 JavaProjectBuilder builder = new JavaProjectBuilder();
                 builder.addSource(new File(filesContent));
-                detailsImport.add("File path: " + filesContent + "\n");
+                detailsImport.add(FILE_PATH+filesContent+ "\n");
                 Collection<JavaSource> sources = builder.getSources();
                 String print;
                 for (JavaSource sourceString : sources) {
                     print = printUnusedImports(String.valueOf(sourceString));
                     if(!print.isEmpty()) {
-                        detailsImport.add("Unused imports are: " + "\n" + print + "\n");
+                        detailsImport.add(DETAILS_IMPORTS + "\n" + print + "\n");
                     }
                     else{
-                        detailsImport.add("Unused imports are: "+null+"\n");
+                        detailsImport.add(DETAILS_IMPORTS +null+"\n");
                     }
                 }
                 Reader inputString = new StringReader(String.valueOf(detailsImport));
-                jTextArea1.read(inputString, "READING FILE :-)");
+                jTextArea1.read(inputString, DESCRIPTION);
 
             }
         } catch (Exception e) {
@@ -224,26 +221,29 @@ public class BotV3 extends javax.swing.JFrame {
 
         try {
             List<String> detailsString = new ArrayList<>();
-            detailsString.add("UNWANTED STRING \n");
+            detailsString.add(DETAILS_STRING);
             for (String filesContent : listFiles) {
                 JavaProjectBuilder builder = new JavaProjectBuilder();
                 builder.addSource(new File(filesContent));
-                detailsString.add("File path: " + filesContent + "\n");
+                detailsString.add(FILE_PATH + filesContent + "\n");
                 Collection<JavaSource> sources = builder.getSources();
+                //Take the list of string with the file content
                 List<String> list = List.of(String.valueOf(sources).split("\""));
-                Set<String> uniqueWords = new HashSet<>(list);
-                for (String word : uniqueWords) {
-                    if (Collections.frequency(list, word) > 1) {
-                        if (!word.startsWith(")")) {
-                            detailsString.add("Word that are repeated: \"" + word + "\" : " + "number of times repeated: " + Collections.frequency(list, word) + "\n");
-                            detailsString.add("Trying adding Constants \n");
+                Set<String> words = new HashSet<>(list);
+                //for loop on every word and duplicate words are separated
+                for (String duplicateWords : words) {
+                    if (Collections.frequency(list, duplicateWords) > 1) {
+                        if (!duplicateWords.startsWith(")")) {
+                            // Collection.frequency would print the number of times the words is there.
+                            detailsString.add(WORDS_REPEATED +"\"" + duplicateWords + "\" : " +NUMBERS_OF_TIME_REPEATED + Collections.frequency(list, duplicateWords) + "\n");
+                            detailsString.add(ADD_CONSTANTS);
                         }
                     }
                 }
-                if(!uniqueWords.isEmpty()){
-                detailsString.add("Congrats no more unwanted string\n\n");}
+                if(!words.isEmpty()){
+                detailsString.add(NO_UNWANTED_STRING);}
                 Reader inputString = new StringReader(String.valueOf(detailsString));
-                jTextArea1.read(inputString, "READING FILE :-)");
+                jTextArea1.read(inputString, DESCRIPTION);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -253,9 +253,8 @@ public class BotV3 extends javax.swing.JFrame {
 
     public static void IfElse() {
         try {
-            List<String> detailsString = new ArrayList<>();
-            List<String> detailsImport = new ArrayList<>();
-            detailsImport.add("UNUSED IMPORTS \n");
+            List<String> detailsIfElse = new ArrayList<>();
+
             for (String filesContent : listFiles) {
                 JavaProjectBuilder builder = new JavaProjectBuilder();
                 builder.addSource(new File(filesContent));
@@ -275,26 +274,25 @@ public class BotV3 extends javax.swing.JFrame {
                     ifStatement = str.split(" ");
                     for (String word : ifStatement) {
                         //Searching for the word
-                        if ((word.equals(searchIf) && word.equals(searchElse)) || (word.equals(searchIf))) {
+                        if (word.equals(searchIf)) {
                             // If present, increment the counter
                             count++;
                         }
                     }
                 }
                 if (count != 0) {
-                    detailsString.add("File path: " + filesContent + "\n");
-                    detailsString.add("The if statement is present \"" + count + "\" : " + "times in the file" + "\n");
-                    detailsString.add("Use  switch case instead\n");
-                    detailsImport.add("\n");
+                    detailsIfElse.add(FILE_PATH + filesContent + "\n");
+                    detailsIfElse.add(IF_PRESENT+"\"" + count + "\" : " +NUMBER_TIMES_PRESENT + "\n");
+                    detailsIfElse.add(USE_SWITCH);
                 } else {
-                    detailsString.add("File path: " + filesContent+"\n");
-                    detailsString.add("The if statement doesn't exist in the file!\n");
-                    detailsString.add("\n");
+                    detailsIfElse.add(FILE_PATH + filesContent+"\n");
+                    detailsIfElse.add(IF_NOT_PRESENT);
+                    detailsIfElse.add("\n");
                 }
                 fileReader.close();
             }
-            Reader inputString = new StringReader(String.valueOf(detailsString));
-            jTextArea1.read(inputString, "READING FILE :-)");
+            Reader inputString = new StringReader(String.valueOf(detailsIfElse));
+            jTextArea1.read(inputString, DESCRIPTION);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -311,15 +309,14 @@ public class BotV3 extends javax.swing.JFrame {
                 listFiles = findFiles(Paths.get(fc.getSelectedFile().getAbsolutePath()), "java");
                 filepath.add(fc.getSelectedFile().getAbsolutePath());
                 Reader inputString = new StringReader(String.valueOf(filepath));
-                jTextArea2.read(inputString, "READING FILE :-)");
+                jTextArea2.read(inputString, DESCRIPTION);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         } else {
             filepath.add(null);
             Reader inputString = new StringReader(String.valueOf(filepath));
-            jTextArea2.read(inputString, "READING FILE :-)");
-            System.out.println("Operation is CANCELLED :(");
+            jTextArea2.read(inputString, DESCRIPTION);
         }
     }
 }
