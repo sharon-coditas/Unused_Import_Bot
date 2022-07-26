@@ -1,14 +1,10 @@
-package com.coditas.unusedImportsBot;/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+package com.coditas.unusedImportsBot;
 
 import com.thoughtworks.qdox.JavaProjectBuilder;
 import com.thoughtworks.qdox.model.JavaSource;
 
 import javax.swing.*;
 import java.io.*;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 
@@ -21,7 +17,7 @@ public class BotV3 extends javax.swing.JFrame {
     static List<String> listFiles = new ArrayList<>();
 
     /**
-     * Creates new form swinggui
+     * Creates new form swing_gui
      */
     public BotV3() {
         initComponents();
@@ -232,20 +228,20 @@ public class BotV3 extends javax.swing.JFrame {
             for (String filesContent : listFiles) {
                 JavaProjectBuilder builder = new JavaProjectBuilder();
                 builder.addSource(new File(filesContent));
+                detailsString.add("File path: " + filesContent + "\n");
                 Collection<JavaSource> sources = builder.getSources();
                 List<String> list = List.of(String.valueOf(sources).split("\""));
                 Set<String> uniqueWords = new HashSet<>(list);
                 for (String word : uniqueWords) {
-                    if (Collections.frequency(list, word) > 1 && !word.isEmpty()) {
-                        if (!word.startsWith(")"))
-                            detailsString.add("File path: " + filesContent + "\n");
-                        detailsString.add("word that is repeated: \"" + word + "\" : " + "number of times repeated: " + Collections.frequency(list, word) + "\n");
-                        detailsString.add("Trying adding Constants \n");
-
-                    } else
-                        detailsString.add("Congrats No Unwanted String");
+                    if (Collections.frequency(list, word) > 1) {
+                        if (!word.startsWith(")")) {
+                            detailsString.add("Word that are repeated: \"" + word + "\" : " + "number of times repeated: " + Collections.frequency(list, word) + "\n");
+                            detailsString.add("Trying adding Constants \n");
+                        }
+                    }
                 }
-
+                if(!uniqueWords.isEmpty()){
+                detailsString.add("Congrats no more unwanted string\n\n");}
                 Reader inputString = new StringReader(String.valueOf(detailsString));
                 jTextArea1.read(inputString, "READING FILE :-)");
             }
@@ -265,21 +261,21 @@ public class BotV3 extends javax.swing.JFrame {
                 builder.addSource(new File(filesContent));
                 File file = new File(filesContent);
                 String[] ifStatement = null;
-                FileReader fr = new FileReader(file);
-                BufferedReader br = new BufferedReader(fr);
+                FileReader fileReader = new FileReader(file);
+                BufferedReader bufferedReader = new BufferedReader(fileReader);
                 String str;
                 // Word to search
-                String search = "if";
-                String search2 = "else";
+                String searchIf = "if";
+                String searchElse = "else";
                 // Initializes the counter of word to zero
                 int count = 0;
                 // Read the contents of the file
-                while ((str = br.readLine()) != null) {
+                while ((str = bufferedReader.readLine()) != null) {
                     // Split the word using space
                     ifStatement = str.split(" ");
                     for (String word : ifStatement) {
                         //Searching for the word
-                        if ((word.equals(search) && word.equals(search2)) || (word.equals(search))) {
+                        if ((word.equals(searchIf) && word.equals(searchElse)) || (word.equals(searchIf))) {
                             // If present, increment the counter
                             count++;
                         }
@@ -295,7 +291,7 @@ public class BotV3 extends javax.swing.JFrame {
                     detailsString.add("The if statement doesn't exist in the file!\n");
                     detailsString.add("\n");
                 }
-                fr.close();
+                fileReader.close();
             }
             Reader inputString = new StringReader(String.valueOf(detailsString));
             jTextArea1.read(inputString, "READING FILE :-)");
