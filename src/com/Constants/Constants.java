@@ -10,7 +10,7 @@ public class Constants {
 
 
     //Button Action general:
-    public static final String DETAILS_IMPORTS = "UNUSED IMPORTS are:\n";
+    public static final String DETAILS_IMPORTS = "UNUSED IMPORTS are:";
     public static final String FILE_PATH = "File path: ";
 
     public static final String DESCRIPTION = "READING FILE :-)";
@@ -22,7 +22,7 @@ public class Constants {
     public static final String IF_PRESENT= "The if statement is present";
     public static final String NUMBER_TIMES_PRESENT= "times in the file";
     public static final String IF_NOT_PRESENT= "The if statement doesn't exist in the file!\n";
-    public static final String USE_SWITCH= "Use  switch case instead\n";
+    public static final String USE_SWITCH= "Use switch case instead\n";
 
 
 
